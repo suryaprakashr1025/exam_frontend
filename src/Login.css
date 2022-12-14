@@ -1,0 +1,31 @@
+
+body{
+   background-color:#6A85B6;
+}
+
+.errors-box{
+    border: 1px solid red !important;
+}
+.success-box{
+    border: 1px solid green !important;
+}
+.opacity-form{
+    opacity:0.5;
+}
+.disabled{
+    
+    cursor: default;
+}
+
+.container{
+    position: absolute;
+    top:50px;
+    left: 100px;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-shadow: 2px 2px black;
+    background-color:#BAC8E0;
+}
+form{
+    padding: 50px 100px;
+}
