@@ -71,7 +71,7 @@ function Login() {
     return (
         <div className='container'>
 
-            <form onSubmit={login.handleSubmit} className={dialog ? "opacity-form" : ""}>
+            <form onSubmit={login.handleSubmit} className={`${dialog ? "opacity-form" : ""} logform`}>
                 <div className='row'>
                     <div className='col-lg-6 mt-3'>
                         <label>Username</label>
@@ -136,15 +136,15 @@ function Login() {
                 </div>
 
                 <div className='col-lg-12 form-floating mt-3 link'>
-                    <Link to="/register" className={dialog ? "disabled" : ""} onClick={dialog ? (event) => event.preventDefault() : ""}>Register</Link>
+                    <Link to="/register" className={`${dialog ? "disabled" : ""} link1`} onClick={dialog ? (event) => event.preventDefault() : ""}>Register</Link>
                 </div>
 
                 <div className='col-lg-12 form-floating mt-3 link'>
-                    <Link to="/changepassword" className={dialog ? "disabled" : ""} onClick={dialog ? (event) => event.preventDefault() : ""}>ChangePassword</Link>
+                    <Link to="/changepassword" className={`${dialog ? "disabled" : ""} link1`} onClick={dialog ? (event) => event.preventDefault() : ""}>ChangePassword</Link>
                 </div>
 
                 <div className='col-lg-12 form-floating mt-3 link'>
-                    <Link to="/forgetpassword" className={dialog ? "disabled" : ""} onClick={dialog ? (event) => event.preventDefault() : ""}>ForgetPassword</Link>
+                    <Link to="/forgetpassword" className={`${dialog ? "disabled" : ""} link1`} onClick={dialog ? (event) => event.preventDefault() : ""}>ForgetPassword</Link>
                 </div>
 
             </form>
