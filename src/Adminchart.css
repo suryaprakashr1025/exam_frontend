@@ -1,0 +1,95 @@
+#home {
+    padding: 30px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ 
+ }
+ 
+ #home .card {
+    margin: 0px 5px;
+    font-weight: bold !important;
+ }
+ 
+ #home .card h5,
+ h6,
+ label {
+ 
+    font-weight: bold !important;
+ }
+ 
+ #home .Block {
+    background-color: #3687f1;
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+ }
+ 
+ #home .Hall {
+    background-color: rgb(247, 112, 229);
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+ }
+ 
+ #home .Department {
+    background-color: rgb(122, 182, 25);
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+ }
+ 
+ #home .Staff {
+    background-color: #FDB10B;
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+ }
+ 
+ #home .Student {
+    background-color: rgb(85, 162, 240);
+    color: white;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+ }
+ 
+ .chart {
+    margin-top: 15px;
+    position: relative;
+    padding: 20px 30px;
+    width: 95%;
+    height: 350px;
+    /* border-radius: 25px;
+    box-shadow: 10px 10px 20px rgba(0,0,0,.5); */
+ }
+ 
+ 
+ 
+ @media only screen and (max-width:900px) {
+    .chart {
+       width: 90%;
+       height: 350px;
+ 
+    }
+ }
+ 
+ @media only screen and (min-width:300px) and (max-width:600px) {
+    .chart {
+       width: 80%;
+       height: 30vh;
+       margin-bottom: 10px;
+       border-radius: 25px;
+       box-shadow: 10px 10px 20px rgba(0, 0, 0, .5);
+    }
+    #home {
+        padding: 30px 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+     }
+  
+     #home .card {
+        margin: 10px 0px;
+     }
+ }
+ 

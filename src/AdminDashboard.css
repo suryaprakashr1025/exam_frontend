@@ -1,4 +1,57 @@
-div .admindashboard{
-   margin:250px 380px;
+.user {
+   padding: 15px 0px;
+   background-color: rgb(129, 80, 221) !important;
+   font-weight: bold !important;
+   box-shadow: 10px 0px 20px rgba(0, 0, 0, 0.5);
+   position: sticky;
+   top: 0px;
+   z-index: 150;
+   color: white !important;
+}
+
+.navcoll {
+   padding-left: 600px;
+}
+
+.close:hover {
+   background-color: black;
+   color: white;
+}
+
+.user li a {
+   color: white !important;
+   font-weight: bold !important;
+}
+
+.user li a:hover {
+   color: orange !important;
+   font-weight: bold !important;
+}
+
+.user span {
+   font-weight: bold;
+}
+
+.dropdown-menu .dropdown-item {
+   color: black !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+   background-color: rgb(129, 80, 221) !important;
+   color: white !important;
+}
+
+
+@media screen and (min-width:300px) and (max-width:991px) {
+   .navcoll {
+      padding-left: 0px !important;
+   }
+
   
+}
+
+@media screen and (min-width:992px) and (max-width:1350px) {
+   .navcoll {
+      padding-left: 500px !important;
+   }
 }
