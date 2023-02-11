@@ -29,6 +29,9 @@ function UserDashboard() {
     navigate("/")
   }
 
+  const home = () =>{
+    navigate("/admindashboard/adminchart")
+  }
   return (
     <>
       {/* navbar */}
@@ -46,7 +49,9 @@ function UserDashboard() {
 
           <div class={`${collapse ? "collapse" : ""} navbar-collapse navcoll`} id="navbarNavDropdown">
             <ul class="navbar-nav">
-
+            <li class="nav-item">
+                <a class="nav-link" href="#" onClick={home}>Home</a>
+              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Hall Details

@@ -1,0 +1,25 @@
+.tableitem {
+    border-radius: 10px;
+    box-shadow: 10px 10px 50px rgba(0, 0, 0, .5);
+    margin: 30px 50px;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden;
+    overflow-x:scroll;
+ }
+
+ .pagelink{
+    cursor: pointer;
+    background-color: rgb(129, 80, 221);
+    color:white ;
+    border-radius: 50px;
+    margin-left: 5px;
+    font-weight: bold;
+ }
+
+ .pagelink:hover{
+    background-color:white;
+    color:rgb(129, 80, 221);
+    border: 2px solid rgb(129, 80, 221);
+
+ }

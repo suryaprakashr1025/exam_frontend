@@ -5,26 +5,25 @@ import { Form, useFormik } from 'formik'
 import { Config } from './Config'
 
 function Adminaddhall() {
-    const [block, setBlock] = useState()
-    const [hall, setHall] = useState()
-    const [seat, setSeat] = useState()
+  
     let alpha = []
     for (let i = 65; i <= 90; i++) {
         alpha.push(String.fromCharCode(i))
     }
-    console.log(alpha)
-    console.log(block)
-    console.log(hall)
-    console.log(seat)
+    //console.log(alpha)
+  
     const Formik = useFormik({
         initialValues: {
             block: "",
             hall: "",
-            seat: ""
+            number_of_seats: ""
         },
         validate: (values) => {
             const errors = {}
+
             if (!values.block) {
+                errors.block = "Please select the block"
+            } else if (values.block === "") {
                 errors.block = "Please select the block"
             }
 
@@ -32,8 +31,8 @@ function Adminaddhall() {
                 errors.hall = "Please enter hall no"
             }
 
-            if (!values.seat) {
-                errors.seat = "Please enter seats"
+            if (!values.number_of_seats) {
+                errors.number_of_seats = "Please enter seats"
             }
 
             return errors;
@@ -41,6 +40,7 @@ function Adminaddhall() {
         onSubmit: async (values) => {
             try {
                 var users = await axios.post(`${Config.api}/createhall`, values)
+                Formik.resetForm()
             }
             catch (error) {
                 alert("error")
@@ -49,16 +49,20 @@ function Adminaddhall() {
     }
     )
     return (
-        <div className='container mt-5' style={{ border: "1px solid black",padding:"30px",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",backgroundColor:"orange"}}>
-            <div className='col-lg-12 mb-3 text-center' style={{fontSize:"30px"}}>
-                <label className=''>Add Hall</label>
+        <div className='container mt-5 p-4' style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center"
+        }}>
+            <div className='col-lg-12 mb-5 text-center' >
+                <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>Add Hall</label>
             </div>
 
             <form className="form-group" onSubmit={Formik.handleSubmit}>
 
                 <div className='row '>
 
-                    <div className='col-lg-4 mb-3'>
+                    <div className='col-lg-4 mb-4'>
                         <div class="form-group">
                             <label className='text-center'>Block</label>
                             <select class="form-select"
@@ -67,7 +71,7 @@ function Adminaddhall() {
                                 onBlur={Formik.handleBlur}
                                 values={Formik.values.block}
                             >
-                                {/* <option selected>Select The Block</option> */}
+                                <option></option>
                                 {
                                     alpha.map((alphabet, index) => {
                                         return (
@@ -82,7 +86,7 @@ function Adminaddhall() {
                         </div>
                     </div>
 
-                    <div className='col-lg-4 mb-3'>
+                    <div className='col-lg-4 mb-4'>
 
                         <div class="form-group">
                             <label>Hall</label>
@@ -106,23 +110,23 @@ function Adminaddhall() {
 
                     </div>
 
-                    <div className='col-lg-4 mb-3'>
+                    <div className='col-lg-4 mb-4'>
 
                         <div class="form-group">
                             <label>Seat</label>
                             <input
-                                name="seat"
+                                name="number_of_seats"
                                 onChange={Formik.handleChange}
                                 onBlur={Formik.handleBlur}
-                                value={Formik.values.seat}
+                                value={Formik.values.number_of_seats}
                                 type={"text"}
                                 class={`form-control 
-                                        ${Formik.errors.seat ? 'error-box' : ""}
-                                        ${Formik.touched.seat && !Formik.errors.seat ? 'success-box' : ""}`
+                                        ${Formik.errors.number_of_seats ? 'error-box' : ""}
+                                        ${Formik.touched.number_of_seats && !Formik.errors.number_of_seats ? 'success-box' : ""}`
                                 }
                             />
                             {
-                                Formik.errors.seat ? <span style={{ color: "red" }}>{Formik.errors.seat}</span> : null
+                                Formik.errors.number_of_seats ? <span style={{ color: "red" }}>{Formik.errors.number_of_seats}</span> : null
                             }
 
                         </div>
@@ -130,8 +134,8 @@ function Adminaddhall() {
 
                     </div>
 
-                    <div class="col-lg-12 text-center">
-                        <input type="Submit" value = "Submit" className='btn btn-outline-primary' />
+                    <div class="col-lg-12 mt-3 text-center">
+                        <input type="Submit" value="Submit" className='btn btn-outline-primary' style={{ fontSize: "16px",fontWeight:"bold",padding:"10px 20px", color:"white",border:"none", backgroundColor: " rgb(129, 80, 221)" }}/>
                     </div>
                 </div>
             </form>

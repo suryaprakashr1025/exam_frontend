@@ -17,9 +17,11 @@ chartjs.register(
 function Adminchart() {
     const [hall, sethall] = useState()
     const [block, setBlock] = useState()
-    const [department, setDepartment] = useState()
     const [staff, setStaff] = useState()
     const [student, setStudent] = useState()
+
+
+    let dept = ["B.sc Computer Science", "B.sc Information Technology", "B.A English", "B.A Tamil", "Bachelor of Commerce", "BACHELOR OF COMMERCE COMPUTER APPLICATIONS", "B.sc Zoology", "B.sc Botony", "B.sc Chemistry", "B.sc Maths", "B.sc Physics"]
 
     const detail = [
         {
@@ -35,7 +37,7 @@ function Adminchart() {
         {
             "id": 3,
             "name": "Department",
-            "total": `${department}`
+            "total": `${dept.length}`
         },
         {
             "id": 4,
@@ -73,21 +75,21 @@ function Adminchart() {
 
             const get_Department_student = await axios.get(`${Config.api}/getstudent`)
             setStudent(get_Department_student.data.length)
-            //console.log(get_Department_student.data.length)
+            // //console.log(get_Department_student.data.length)
 
-            let data = get_Department_student.data
-            let deptdata = data.map(dept => {
-                return dept.department
-            })
-            //console.log(deptdata)
+            // let data = get_Department_student.data
+            // let deptdata = data.map(dept => {
+            //     return dept.department
+            // })
+            // //console.log(deptdata)
 
-            let index = deptdata.filter((dept, index) => {
-                return deptdata.indexOf(dept) === index
-            });
-            //console.log(index)
-            //console.log(index.length)
+            // let index = deptdata.filter((dept, index) => {
+            //     return deptdata.indexOf(dept) === index
+            // });
+            // //console.log(index)
+            // //console.log(index.length)
 
-            setDepartment(index.length)
+            // setDepartment(index.length)
 
             const get_staff = await axios.get(`${Config.api}/getstaff`)
             setStaff(get_staff.data.length)
@@ -107,7 +109,7 @@ function Adminchart() {
         labels: ["Block", "Hall", "Department", "Staff", "Student"],
         datasets: [{
             label: "College",
-            data: [`${block}`, `${hall}`, `${department}`, `${staff}`, `${student}`],
+            data: [`${block}`, `${hall}`, `${dept.length}`, `${staff}`, `${student}`],
             backgroundColor: ["#3687f1", "rgb(247, 112, 229)", "rgb(122, 182, 25)", "#FDB10B", "rgb(85, 162, 240)"],
             tension: 0.4,
             fill: 1,
