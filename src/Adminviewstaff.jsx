@@ -1,13 +1,17 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { Form, useFormik } from 'formik'
 import { Config } from './Config'
-import { Comment, Rings } from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 import { FaRegEdit } from 'react-icons/fa';
 import { AiOutlineDelete } from 'react-icons/ai';
-
+import { UserContext } from './Usercontext'
+import {Link} from "react-router-dom"
 function Adminviewstaff() {
+
+  const staffdetail = useContext(UserContext)
+
   const [user, setUser] = useState([])
   const [page, setPage] = useState([])
   const [currectPage, setCurrentpage] = useState()
@@ -51,24 +55,9 @@ function Adminviewstaff() {
     }
   }
 
-  const deleteItem = async (id) => {
-    try {
-      setSent(true)
-      const setreason = await axios.put(`${Config.api}/setreason/${id}`, {
-        reason: `${reason}`
-      })
 
-      const deletelist = await axios.delete(`${Config.api}/deleteuser/${id}`)
-      // resetForm()
-      getData()
-      setPopup(false)
-      setSent(false)
-    } catch (error) {
-      alert("something went wrong")
-    }
-  }
 
-  
+
 
   const confirm = (id) => {
     setPopup(true)
@@ -76,13 +65,9 @@ function Adminviewstaff() {
     setDeleteid(id)
   }
 
-  const secondconfirm = () => {
-    setVerify(true)
-  }
 
-  const cancel = () => {
-    setPopup(false)
-  }
+
+
 
 
 
@@ -111,16 +96,21 @@ function Adminviewstaff() {
           </thead>
           <tbody>
 
-            {loading ? <div class="d-flex justify-content-center rings1" style={{ width: "100%" }}><Rings
-              height="80"
-              width="50"
-              color="black"
-              radius="6"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-              ariaLabel="rings-loading"
-            /> </div> :
+            {loading ?
+              <tr>
+                <td colspan="7">
+                  <div style={{ height: "10vh", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}><ThreeDots
+                    height="50"
+                    width="50"
+                    radius="9"
+                    color="black"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true}
+                  /> </div>
+                </td>
+              </tr> :
               page.map(userlist => {
                 return (
                   <tr>
@@ -131,9 +121,9 @@ function Adminviewstaff() {
                     <td>{userlist.gender}</td>
                     <td>{userlist.staffid}</td>
                     <td>
-                      <a onClick={() => confirm(userlist._id)} style={{cursor:"pointer"}}><FaRegEdit/></a>
-                      <a onClick={() => confirm(userlist._id)} style={{cursor:"pointer"}}> <AiOutlineDelete/></a>
-                      </td>
+                      <Link to={`/admindashboard/adminstaff/${userlist._id}`} style={{ cursor: "pointer" }}><FaRegEdit /></Link>
+                      <a onClick={() => confirm(userlist._id)} style={{ cursor: "pointer" }}> <AiOutlineDelete /></a>
+                    </td>
                   </tr>
                 )
               })
@@ -149,7 +139,7 @@ function Adminviewstaff() {
           <nav aria-label="Page navigation example" className={`navpage mx-auto ${popup ? "userdisablepage" : null}`} >
             <div className='paginationdiv'>
               <ul class="nav justify-content-center pageul my-3">
-               
+
                 {
                   user.length > 5 ?
                     [...Array(pagenumbers)].map((page, index) => {
@@ -160,12 +150,12 @@ function Adminviewstaff() {
                       )
                     }) : null
                 }
-               
+
               </ul>
             </div>
           </nav> : null
       }
-
+      {staffdetail.setTeacher(user)}
 
     </>
   )

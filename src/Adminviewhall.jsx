@@ -1,14 +1,19 @@
 
 import "./Adminviewhall.css"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { Form, useFormik } from 'formik'
 import { Config } from './Config'
-import { Comment, Rings } from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 import { FaRegEdit } from 'react-icons/fa';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { UserContext } from "./Usercontext"
+import {Link} from "react-router-dom";
 
 function Adminviewhall() {
+
+  const halldetails = useContext(UserContext)
+
   const [values, setValues] = useState("")
   const [block, setBlock] = useState([])
   const [user, setUser] = useState([])
@@ -57,6 +62,7 @@ function Adminviewhall() {
   useEffect(() => {
     getData()
   }, [])
+
   console.log(values)
   console.log(values.length === 1)
 
@@ -67,23 +73,6 @@ function Adminviewhall() {
       const getData = await axios.get(`${Config.api}/gethall`)
       setPage(getData.data.slice(start, end))
       setCurrentpage(index)
-    } catch (error) {
-      alert("something went wrong")
-    }
-  }
-
-  const deleteItem = async (id) => {
-    try {
-      setSent(true)
-      const setreason = await axios.put(`${Config.api}/setreason/${id}`, {
-        reason: `${reason}`
-      })
-
-      const deletelist = await axios.delete(`${Config.api}/deleteuser/${id}`)
-      // resetForm()
-      getData()
-      setPopup(false)
-      setSent(false)
     } catch (error) {
       alert("something went wrong")
     }
@@ -106,22 +95,11 @@ function Adminviewhall() {
     }
   }
 
-
-
   const confirm = (id) => {
     setPopup(true)
     setMessage("Why are you delete this user ?")
     setDeleteid(id)
   }
-
-  const secondconfirm = () => {
-    setVerify(true)
-  }
-
-  const cancel = () => {
-    setPopup(false)
-  }
-
 
 
   const pagenumbers = Math.ceil(user.length / perPage)
@@ -146,7 +124,7 @@ function Adminviewhall() {
             </select>
           </div>
           <div class="col-auto mx-2">
-            <button type="submit" class="btn btn-primary mb-3" onClick={getData} style={{ fontSize: "16px",fontWeight:"bold",padding:"7px 20px", color:"white",border:"none", backgroundColor: " rgb(129, 80, 221)" }}>All Data</button>
+            <button type="submit" class="btn btn-primary mb-3" onClick={getData} style={{ fontSize: "16px", fontWeight: "bold", padding: "7px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }}>All Data</button>
           </div>
 
         </form>
@@ -155,9 +133,9 @@ function Adminviewhall() {
 
 
 
-      <div className={`tableitem mt-2 ${popup ? "userdisablepage" : null}`}>
+      <div className={`tableitem mt-2 ${popup ? "userdisablepage" : null}`} >
 
-        <table class="table">
+        <table class="table ">
           <thead>
             <tr>
               <th scope="col">Block</th>
@@ -168,16 +146,21 @@ function Adminviewhall() {
           </thead>
           <tbody>
 
-            {loading ? <div class="d-flex justify-content-center" style={{ width: "100%" }}><Rings
-              height="50"
-              width="50"
-              color="black"
-              radius="6"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-              ariaLabel="rings-loading"
-            /> </div> :
+            {loading ? 
+            <tr>
+              <td colspan="4">
+                <div style={{ height: "10vh", display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}><ThreeDots
+                  height="50"
+                  width="50"
+                  radius="9"
+                  color="black"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                /> </div>
+              </td>
+            </tr> :
               page.map(userlist => {
                 return (
                   <tr>
@@ -186,7 +169,7 @@ function Adminviewhall() {
                     <td>{userlist.number_of_seats}</td>
 
                     <td>
-                      <a onClick={() => confirm(userlist._id)} style={{ cursor: "pointer" }}><FaRegEdit /></a>
+                      <Link to={`/admindashboard/adminhall/${userlist._id}`} style={{ cursor: "pointer" }}><FaRegEdit /></Link>
                       <a onClick={() => confirm(userlist._id)} style={{ cursor: "pointer" }}> <AiOutlineDelete /></a>
                     </td>
                   </tr>
@@ -220,7 +203,7 @@ function Adminviewhall() {
             </div>
           </nav> : null
       }
-
+{halldetails.setRoom(user)}
 
     </>
   )

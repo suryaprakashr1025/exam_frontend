@@ -15,15 +15,15 @@ import Adminchart from './Adminchart';
 
 import Adminaddhall from './Adminaddhall';
 import Adminviewhall from './Adminviewhall';
-import Adminedithall from './Adminedithall';
 
 import Adminaddstaff from './Adminaddstaff';
 import Adminviewstaff from './Adminviewstaff';
-import Admineditstaff from './Admineditstaff';
 
 import Adminaddstudent from './Adminaddstudent';
 import Adminviewstudent from './Adminviewstudent';
-import Admineditstudent from './Admineditstudent';
+
+import Adminaddexam from './Adminaddexam';
+import Adminviewexam from './Adminviewexam';
 function App() {
   return (
     <BrowserRouter>
@@ -39,18 +39,18 @@ function App() {
 
           <Route path="/admindashboard/adminchart" element={<Adminchart />} />
 
-          <Route path="/admindashboard/adminhall" element={<Adminaddhall />} />
+          <Route path="/admindashboard/adminhall/:hallid" element={<Adminaddhall />} />
           <Route path="/admindashboard/adminviewhall" element={<Adminviewhall />} />
-          <Route path="/admindashboard/adminedithall" element={<Adminedithall />} />
+       
 
-          <Route path="/admindashboard/adminstaff" element={<Adminaddstaff />} />
+          <Route path="/admindashboard/adminstaff/:staffid" element={<Adminaddstaff />} />
           <Route path="/admindashboard/adminviewstaff" element={<Adminviewstaff />} />
-          <Route path="/admindashboard/admineditstaff" element={<Admineditstaff />} />
-
-          <Route path="/admindashboard/adminstudent" element={<Adminaddstudent />} />
+         
+          <Route path="/admindashboard/adminstudent/:studentid" element={<Adminaddstudent />} />
           <Route path="/admindashboard/adminviewstudent" element={<Adminviewstudent />} />
-          <Route path="/admindashboard/admineditstudent" element={<Admineditstudent />} />
-
+         
+          <Route path="/admindashboard/adminaddexam/:examid" element={<Adminaddexam />} />
+          <Route path="/admindashboard/adminviewexam" element={<Adminviewexam />} />
         </Route>
 
 

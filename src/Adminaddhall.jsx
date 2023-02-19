@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext} from 'react'
 import "./Adminaddhall.css"
 import axios from 'axios'
 import { Form, useFormik } from 'formik'
 import { Config } from './Config'
+import { useNavigate, useParams } from 'react-router-dom'
+import { UserContext } from './Usercontext'
 
 function Adminaddhall() {
-  
+    const halldetails = useContext(UserContext)
+    const halls = halldetails.room
+    const { hallid } = useParams()
+    
+    const navigate = useNavigate()
+
+
     let alpha = []
     for (let i = 65; i <= 90; i++) {
         alpha.push(String.fromCharCode(i))
     }
     //console.log(alpha)
-  
+
     const Formik = useFormik({
         initialValues: {
             block: "",
@@ -39,8 +47,9 @@ function Adminaddhall() {
         },
         onSubmit: async (values) => {
             try {
-                var users = await axios.post(`${Config.api}/createhall`, values)
+                var users = hallid.length > 5 ? await axios.put(`${Config.api}/updatehall/${hallid}`, values) : await axios.post(`${Config.api}/createhall`, values)
                 Formik.resetForm()
+                navigate("/admindashboard/adminviewhall")
             }
             catch (error) {
                 alert("error")
@@ -48,6 +57,25 @@ function Adminaddhall() {
         }
     }
     )
+
+    useEffect(()=>{
+        if(hallid.length>5){
+            const checkhall = halls.findIndex(ha=>{
+                return ha._id === hallid
+            })
+            console.log(checkhall)
+            console.log(halls[checkhall].block)
+           
+            Formik.setFieldValue("hall",halldetails.room[checkhall].hall)
+            Formik.setFieldValue("number_of_seats",halldetails.room[checkhall].number_of_seats)
+            Formik.setFieldValue("block",halldetails.room[checkhall].block)
+        }
+    },[])
+
+const back = () =>{
+    hallid.length > 5 ? navigate("/admindashboard/adminviewhall") : navigate("/admindashboard/adminchart")
+}
+
     return (
         <div className='container mt-5 p-4' style={{
             display: "flex",
@@ -55,7 +83,7 @@ function Adminaddhall() {
             justifyContent: "center"
         }}>
             <div className='col-lg-12 mb-5 text-center' >
-                <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>Add Hall</label>
+                <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>{hallid.length > 5 ? "Update Hall": "Add Hall"}</label>
             </div>
 
             <form className="form-group" onSubmit={Formik.handleSubmit}>
@@ -135,7 +163,8 @@ function Adminaddhall() {
                     </div>
 
                     <div class="col-lg-12 mt-3 text-center">
-                        <input type="Submit" value="Submit" className='btn btn-outline-primary' style={{ fontSize: "16px",fontWeight:"bold",padding:"10px 20px", color:"white",border:"none", backgroundColor: " rgb(129, 80, 221)" }}/>
+                    <input type="Submit" value="Back" onClick={back} className='btn btn-outline-primary mx-3' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
+                        <input type="Submit" value={hallid.length > 5 ? "Update": "Add"} className='btn btn-outline-primary' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
                     </div>
                 </div>
             </form>

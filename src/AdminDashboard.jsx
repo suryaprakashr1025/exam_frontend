@@ -12,7 +12,7 @@ function UserDashboard() {
   const navigate = useNavigate()
 
   const [collapse, setCollapse] = useState(true)
-  
+
 
   const handleClick = () => {
     setCollapse(false)
@@ -21,7 +21,7 @@ function UserDashboard() {
     setCollapse(true)
   }
 
-  
+
 
   const logout = () => {
     localStorage.removeItem("exam")
@@ -29,7 +29,7 @@ function UserDashboard() {
     navigate("/")
   }
 
-  const home = () =>{
+  const home = () => {
     navigate("/admindashboard/adminchart")
   }
   return (
@@ -48,17 +48,20 @@ function UserDashboard() {
           }
 
           <div class={`${collapse ? "collapse" : ""} navbar-collapse navcoll`} id="navbarNavDropdown">
+           
             <ul class="navbar-nav">
-            <li class="nav-item">
+
+              <li class="nav-item">
                 <a class="nav-link" href="#" onClick={home}>Home</a>
               </li>
+
               <li class="nav-item dropdown">
                 <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Hall Details
                 </a>
                 <ul class="dropdown-menu">
-                  <li><Link to="/admindashboard/adminhall" class="dropdown-item" >Create Hall</Link></li>
-                  <li><Link to="/admindashboard/adminviewhall" class="dropdown-item" >view</Link></li>
+                  <li><Link to="/admindashboard/adminhall/empty" onClick={handleclose} class="dropdown-item" >Create Hall</Link></li>
+                  <li><Link to="/admindashboard/adminviewhall" onClick={handleclose} class="dropdown-item" >view</Link></li>
                 </ul>
               </li>
 
@@ -67,20 +70,30 @@ function UserDashboard() {
                   Staff Details
                 </a>
                 <ul class="dropdown-menu">
-                  <li><Link to="/admindashboard/adminstaff" class="dropdown-item" href="#">Create Staff</Link></li>
-                  <li><Link to="/admindashboard/adminviewstaff" class="dropdown-item" href="#">view</Link></li>
+                  <li><Link to="/admindashboard/adminstaff/empty" onClick={handleclose} class="dropdown-item" href="#">Create Staff</Link></li>
+                  <li><Link to="/admindashboard/adminviewstaff" onClick={handleclose} class="dropdown-item" href="#">view</Link></li>
                 </ul>
 
               </li>
-
 
               <li class="nav-item dropdown">
                 <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Student Details
                 </a>
                 <ul class="dropdown-menu">
-                  <li><Link to="/admindashboard/adminstudent" class="dropdown-item" href="#">Create Student</Link></li>
-                  <li><Link to="/admindashboard/adminviewstudent" class="dropdown-item" href="#">view</Link></li>
+                  <li><Link to="/admindashboard/adminstudent/empty" onClick={handleclose} class="dropdown-item" href="#">Create Student</Link></li>
+                  <li><Link to="/admindashboard/adminviewstudent" onClick={handleclose} class="dropdown-item" href="#">view</Link></li>
+                </ul>
+
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Exam Details
+                </a>
+                <ul class="dropdown-menu">
+                  <li><Link to="/admindashboard/adminaddexam/empty" onClick={handleclose} class="dropdown-item" href="#">Create Exam</Link></li>
+                  <li><Link to="/admindashboard/adminviewexam" onClick={handleclose} class="dropdown-item" href="#">view</Link></li>
                 </ul>
 
               </li>
@@ -89,13 +102,13 @@ function UserDashboard() {
                 <a class="nav-link" href="#" onClick={logout}>Logout</a>
               </li>
 
-
             </ul>
+
           </div>
         </div>
       </nav>
 
-    <Outlet/>
+      <Outlet />
     </>
   )
 }

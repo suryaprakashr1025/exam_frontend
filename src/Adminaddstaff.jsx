@@ -1,9 +1,20 @@
-import React from 'react'
+import { React, useEffect, useContext } from 'react'
 import { Config } from './Config'
 import axios from 'axios'
 import { Form, useFormik } from 'formik'
+import { useNavigate, useParams } from 'react-router-dom'
+import { UserContext } from './Usercontext'
 
 function Adminaddstaff() {
+
+  const navigate = useNavigate()
+
+  const { staffid } = useParams()
+
+  const teacherid = useContext(UserContext)
+
+  const checkteacher = teacherid.teacher
+
   const currentYear = new Date()
   const year = currentYear.getFullYear()
 
@@ -62,9 +73,10 @@ function Adminaddstaff() {
     },
     onSubmit: async (values) => {
       try {
-        var users = await axios.post(`${Config.api}/createstaff`, values)
+        var users = staffid.length > 5 ? await axios.put(`${Config.api}/updatestaff/${staffid}`, values) : await axios.post(`${Config.api}/createstaff`, values)
         console.log(users)
         Formik.resetForm()
+        navigate("/admindashboard/adminviewstaff")
       }
       catch (error) {
         alert("error")
@@ -73,6 +85,24 @@ function Adminaddstaff() {
   }
   )
 
+  useEffect(() => {
+    if (staffid.length > 5) {
+      const checksta = checkteacher.findIndex(sta => {
+        return sta._id === staffid
+      })
+      console.log(checkteacher[checksta])
+
+      Formik.setFieldValue("name", checkteacher[checksta].name)
+      Formik.setFieldValue("phone", checkteacher[checksta].phone)
+      Formik.setFieldValue("email", checkteacher[checksta].email)
+      Formik.setFieldValue("department", checkteacher[checksta].department)
+      Formik.setFieldValue("gender", checkteacher[checksta].gender)
+    }
+  },[])
+
+  const back = () => {
+    staffid.length > 5 ? navigate("/admindashboard/adminviewstaff") : navigate("/admindashboard/adminchart")
+  }
 
   return (
     <div class="container mt-5 p-4" style={{
@@ -82,7 +112,7 @@ function Adminaddstaff() {
     }}>
 
       <div className='col-lg-12 text-center mb-5' >
-        <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>Add Staff</label>
+        <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>{staffid.length > 5 ? "Update Staff" : "Add Staff"}</label>
       </div>
 
       <form onSubmit={Formik.handleSubmit} class="form-group">
@@ -193,7 +223,8 @@ function Adminaddstaff() {
 
 
           <div class="col-lg-12 mt-3 text-center">
-            <input type="Submit" value="Submit" className='btn btn-outline-primary' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
+            <input type="Submit" value="Back" onClick={back} className='btn btn-outline-primary mx-3' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
+            <input type="Submit" value={staffid.length > 5 ? "Update" : "Add"} className='btn btn-outline-primary' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
           </div>
 
         </div>

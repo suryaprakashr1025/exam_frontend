@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Config } from './Config'
 import axios from 'axios'
 import { Form, useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { UserContext } from './Usercontext'
 
 function Adminaddstudent() {
+
+  const studentdata = useContext(UserContext)
+  const checkstuid = studentdata.edit
+
+  const navigate = useNavigate()
+
+  const { studentid } = useParams()
 
   const currentYear = new Date()
   const year = currentYear.getFullYear()
@@ -73,9 +81,10 @@ function Adminaddstudent() {
     },
     onSubmit: async (values) => {
       try {
-        var users = await axios.post(`${Config.api}/createstudent`, values)
+        var users = studentid.length > 5 ? await axios.put(`${Config.api}/updatestudent/${studentid}`, values) : await axios.post(`${Config.api}/createstudent`, values)
         console.log(users)
         Formik.resetForm()
+        navigate("/admindashboard/adminviewstudent")
       }
       catch (error) {
         alert("error")
@@ -84,7 +93,25 @@ function Adminaddstudent() {
   }
   )
 
+  useEffect(() => {
+    if (studentid.length > 5) {
+      const checkid = checkstuid.findIndex(stu => {
+        return stu._id === studentid
+      })
+      // console.log(checkid)
+      // console.log(studentdata.edit[checkid])
+      Formik.setFieldValue("name", studentdata.edit[checkid].name)
+      Formik.setFieldValue("phone", studentdata.edit[checkid].phone)
+      Formik.setFieldValue("email", studentdata.edit[checkid].email)
+      Formik.setFieldValue("joinyear", studentdata.edit[checkid].joinyear)
+      Formik.setFieldValue("department", studentdata.edit[checkid].department)
+      Formik.setFieldValue("gender", studentdata.edit[checkid].gender)
+    }
+  }, [])
 
+  const back = () => {
+    studentid.length > 5 ? navigate("/admindashboard/adminviewstudent") : navigate("/admindashboard/adminchart")
+  }
   return (
     <div class="container mt-5 p-4" style={{
       display: "flex",
@@ -93,7 +120,7 @@ function Adminaddstudent() {
     }}>
 
       <div className='col-lg-12 text-center mb-5' >
-        <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>Add Student</label>
+        <label style={{ fontSize: "22px", color: " rgb(129, 80, 221)" }}>{studentid.length > 5 ? "Update Student" : "Add Student"}</label>
       </div>
 
       <form onSubmit={Formik.handleSubmit} class="form-group">
@@ -225,7 +252,8 @@ function Adminaddstudent() {
           </div>
 
           <div class="col-lg-12 mt-3 text-center">
-            <input type="Submit" value="Submit" className='btn btn-outline-primary' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
+            <input type="button" value="Back" onClick={back} className='btn btn-outline-primary mx-3' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
+            <input type="Submit" value={studentid.length > 5 ? "Update" : "Add"} className='btn btn-outline-primary' style={{ fontSize: "16px", fontWeight: "bold", padding: "10px 20px", color: "white", border: "none", backgroundColor: " rgb(129, 80, 221)" }} />
           </div>
 
         </div>
